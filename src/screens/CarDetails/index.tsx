@@ -4,6 +4,8 @@ import { ImageSlider } from "../../components/ImageSlider";
 import { Acessory } from "../../components/Acessory";
 import { Button } from "../../components/Button";
 
+import {useNavigation} from '@react-navigation/native'
+
 import SpeedSVG from '../../assets/speed.svg'
 import AccelerationSVG from '../../assets/acceleration.svg'
 import ForceSVG from '../../assets/force.svg'
@@ -29,10 +31,20 @@ import {
 } from "./styles";
 
 export function CarDetails() {
+  const navigation = useNavigation();
+
+  function handleChooseRentalPeriod(){
+    navigation.navigate('Scheduling')
+  }
+
+  function handleGoBack(){
+    navigation.goBack()
+  }
+
   return (
     <Container>
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={handleGoBack} />
       </Header>
       <CarImages>
         <ImageSlider
@@ -68,7 +80,7 @@ export function CarDetails() {
         </About>
       </Content>
       <Footer>
-        <Button title="Confirmar"/>
+        <Button onPress={handleChooseRentalPeriod} title="Escolher período do aluguel"/>
       </Footer>
     </Container>
   );
