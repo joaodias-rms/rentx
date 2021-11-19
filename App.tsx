@@ -10,6 +10,8 @@ import {
   Archivo_600SemiBold,
 } from "@expo-google-fonts/archivo";
 
+import { Routes } from "./src/routes";
+
 import { ThemeProvider } from "styled-components/native";
 import AppLoading from "expo-app-loading";
 
@@ -29,7 +31,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SchedulingComplete />
+      <Routes />
     </ThemeProvider>
   );
 }
