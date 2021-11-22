@@ -4,7 +4,7 @@ import { ImageSlider } from "../../components/ImageSlider";
 import { Acessory } from "../../components/Acessory";
 import { Button } from "../../components/Button";
 
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 
 import SpeedSVG from '../../assets/speed.svg'
 import AccelerationSVG from '../../assets/acceleration.svg'
@@ -29,9 +29,18 @@ import {
   Acessories,
   Footer
 } from "./styles";
+import { carDTO } from "../../dtos/carDTO";
+
+interface Params{
+  car: carDTO
+}
 
 export function CarDetails() {
   const navigation = useNavigation();
+
+  const route = useRoute();
+
+  const { car } = route.params as Params;
 
   function handleChooseRentalPeriod(){
     navigation.navigate('Scheduling')
@@ -56,7 +65,7 @@ export function CarDetails() {
       <Content>
         <Details>
           <Description>
-            <Brand>BMW</Brand>
+            <Brand>{car.brand}</Brand>
             <Name>M3</Name>
           </Description>
           <Rent>
