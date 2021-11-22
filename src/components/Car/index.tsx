@@ -15,19 +15,11 @@ import {
 } from "./styles";
 
 import GasolineSVG from "../../assets/gasoline.svg";
+import { carDTO } from "../../dtos/carDTO";
 
-interface CarData {
-  brand: string;
-  name: string;
-  rent: {
-    period: string;
-    price: number;
-  },
-  thumbnail: string;
-}
 
 interface Props extends RectButtonProps{
-  data: CarData;
+  data: carDTO;
 }
 
 export function Car({ data, ...rest }: Props) {
