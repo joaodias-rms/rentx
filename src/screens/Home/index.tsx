@@ -18,7 +18,7 @@ export function Home() {
   const [cars, setCars] = useState<carDTO[]>([]);
   const [loading, setLoading] = useState(true);
   function handleCarDetails(car: carDTO) {
-    navigation.navigate("CarDetails", car);
+    navigation.navigate("CarDetails", {car});
   }
 
   useEffect(() => {
@@ -26,7 +26,6 @@ export function Home() {
       try {
         const response = await api.get("/cars");
         setCars(response.data);
-        console.log(cars);
       } catch (error) {
         console.log(error);
         Alert.alert("Erro ao obter carros");
