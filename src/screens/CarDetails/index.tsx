@@ -4,14 +4,14 @@ import { ImageSlider } from "../../components/ImageSlider";
 import { Acessory } from "../../components/Acessory";
 import { Button } from "../../components/Button";
 
-import {useNavigation, useRoute} from '@react-navigation/native'
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-import SpeedSVG from '../../assets/speed.svg'
-import AccelerationSVG from '../../assets/acceleration.svg'
-import ForceSVG from '../../assets/force.svg'
-import GasolineSVG from '../../assets/gasoline.svg'
-import ExchangeSVG from '../../assets/exchange.svg'
-import PeopleSVG from '../../assets/people.svg'
+import SpeedSVG from "../../assets/speed.svg";
+import AccelerationSVG from "../../assets/acceleration.svg";
+import ForceSVG from "../../assets/force.svg";
+import GasolineSVG from "../../assets/gasoline.svg";
+import ExchangeSVG from "../../assets/exchange.svg";
+import PeopleSVG from "../../assets/people.svg";
 
 import {
   Container,
@@ -27,12 +27,12 @@ import {
   Price,
   About,
   Acessories,
-  Footer
+  Footer,
 } from "./styles";
 import { carDTO } from "../../dtos/carDTO";
 
-interface Params{
-  car: carDTO
+interface Params {
+  car: carDTO;
 }
 
 export function CarDetails() {
@@ -42,12 +42,12 @@ export function CarDetails() {
 
   const { car } = route.params as Params;
 
-  function handleChooseRentalPeriod(){
-    navigation.navigate('Scheduling')
+  function handleChooseRentalPeriod() {
+    navigation.navigate("Scheduling");
   }
 
-  function handleGoBack(){
-    navigation.goBack()
+  function handleGoBack() {
+    navigation.goBack();
   }
 
   return (
@@ -57,39 +57,32 @@ export function CarDetails() {
       </Header>
       <CarImages>
         <ImageSlider
-          imagesUrl={[
-            "https://static.wikia.nocookie.net/forzamotorsport/images/4/45/HOR_XB1_Audi_RS_5.png/revision/latest?cb=20191201154056",
-          ]}
+          imagesUrl={car.photos}
         />
       </CarImages>
       <Content>
         <Details>
           <Description>
             <Brand>{car.brand}</Brand>
-            <Name>M3</Name>
+            <Name>{car.name}</Name>
           </Description>
           <Rent>
-            <Period>Ao dia</Period>
-            <Price>R$580</Price>
+            <Period>{car.rent.period}</Period>
+            <Price>R${car.rent.price}</Price>
           </Rent>
         </Details>
         <Acessories>
-          <Acessory name="380 Km/h" icon={SpeedSVG}/>
-          <Acessory name="3.2s" icon={AccelerationSVG}/>
-          <Acessory name="800hp" icon={ForceSVG}/>
-          <Acessory name="Gasolina" icon={GasolineSVG}/>
-          <Acessory name="Auto" icon={ExchangeSVG}/>
-          <Acessory name="2" icon={PeopleSVG}/>
+          {car.accessories.map((acessory) => (
+            <Acessory key={acessory.type} name={acessory.name} icon={SpeedSVG} />
+          ))}
         </Acessories>
-        <About>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-          iste dolores dolorum deleniti itaque ullam sequi! Eligendi quae odit
-          voluptates consequatur. Consectetur dolores iure, necessitatibus
-          veniam in repellendus eius expedita.
-        </About>
+        <About>{car.about}</About>
       </Content>
       <Footer>
-        <Button onPress={handleChooseRentalPeriod} title="Escolher período do aluguel"/>
+        <Button
+          onPress={handleChooseRentalPeriod}
+          title="Escolher período do aluguel"
+        />
       </Footer>
     </Container>
   );
