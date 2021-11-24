@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
 import { ImageSlider } from "../../components/ImageSlider";
@@ -44,6 +44,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 export function SchedulingDetails() {
   const navigation = useNavigation();
+  const route = useRoute()
+
 
   function handleGoBack() {
     navigation.goBack();
