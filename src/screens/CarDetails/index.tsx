@@ -6,12 +6,7 @@ import { Button } from "../../components/Button";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import SpeedSVG from "../../assets/speed.svg";
-import AccelerationSVG from "../../assets/acceleration.svg";
-import ForceSVG from "../../assets/force.svg";
-import GasolineSVG from "../../assets/gasoline.svg";
-import ExchangeSVG from "../../assets/exchange.svg";
-import PeopleSVG from "../../assets/people.svg";
+import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 
 import {
   Container,
@@ -73,7 +68,7 @@ export function CarDetails() {
         </Details>
         <Acessories>
           {car.accessories.map((acessory) => (
-            <Acessory key={acessory.type} name={acessory.name} icon={SpeedSVG} />
+            <Acessory key={acessory.type} name={acessory.name} icon={getAccessoryIcon(acessory.type)} />
           ))}
         </Acessories>
         <About>{car.about}</About>
