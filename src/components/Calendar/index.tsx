@@ -32,11 +32,10 @@ interface DayProps {
 }
 
 interface CustomCalendarProps extends CalendarProps{
-  markedDates: MarkedDateProps;
-  onDayPress: ()=> DayProps;
+  markedDate: MarkedDateProps;
 }
 
-function Calendar({onDayPress,markedDates, ...rest}:CustomCalendarProps) {
+function Calendar({onDayPress,markedDate, ...rest}:CustomCalendarProps) {
   return (
     <CustomCalendar 
       {...rest}
@@ -66,7 +65,7 @@ function Calendar({onDayPress,markedDates, ...rest}:CustomCalendarProps) {
       firstDay={1}
       minDate={new Date()}
       markingType="period"
-      markedDates={markedDates}
+      markedDates={ markedDate }
       onDayPress={onDayPress}
     />
   );
