@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StatusBar, Alert } from "react-native";
+import { StatusBar } from "react-native";
 import { format } from "date-fns";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { getPlatformDate } from "../../utils/getPlatformDate";
@@ -33,9 +33,9 @@ interface Params {
 
 interface RentalInterval {
   start: number;
-  startFormatted: string;
+  startDate: string;
   end: number;
-  endFormatted: string;
+  endDate: string;
 }
 
 export function Scheduling() {
@@ -58,15 +58,12 @@ export function Scheduling() {
   }
 
   function handleConfirm() {
-    if (!rentalInterval.start || !rentalInterval.end) {
-      Alert.alert("Selecione um período de aluguel");
-    } else {
-      navigation.navigate("SchedulingDetails", {
-        car,
-        dates: Object.keys(markedDate),
-      });
-    }
+    navigation.navigate("SchedulingDetails", {
+      car,
+      dates: Object.keys(markedDate),
+    });
   }
+
   function handleChangeDate(date: DayProps) {
     let start = !lastSelectedDate.timestamp ? date : lastSelectedDate; //define date caso não haja timestamp, caso contrário define a última data selecionada
     let end = date;
@@ -89,11 +86,8 @@ export function Scheduling() {
     setRentalInterval({
       start: start.timestamp,
       end: end.timestamp,
-      startFormatted: format(
-        getPlatformDate(new Date(firstDate)),
-        "dd/MM/yyyy"
-      ),
-      endFormatted: format(getPlatformDate(new Date(endDate)), "dd/MM/yyyy"),
+      startDate: format(getPlatformDate(new Date(firstDate)), "dd/MM/yyyy"),
+      endDate: format(getPlatformDate(new Date(endDate)), "dd/MM/yyyy"),
     });
   }
 
@@ -114,14 +108,14 @@ export function Scheduling() {
             <DateTitle>De</DateTitle>
             <DateValue selected={!!rentalInterval.start}>
               {" "}
-              {rentalInterval.startFormatted}{" "}
+              {rentalInterval.startDate}{" "}
             </DateValue>
           </DateInfo>
           <ArrowSVG />
           <DateInfo>
             <DateTitle>Até</DateTitle>
-            <DateValue selected={!!rentalInterval.endFormatted}>
-              {rentalInterval.endFormatted}
+            <DateValue selected={!!rentalInterval.endDate}>
+              {rentalInterval.endDate}
             </DateValue>
           </DateInfo>
         </RentalPeriod>
@@ -131,7 +125,11 @@ export function Scheduling() {
       </Content>
 
       <Footer>
-        <Button onPress={handleConfirm} title="Confirmar" />
+        <Button
+          enabled={!!rentalInterval.start}
+          onPress={handleConfirm}
+          title="Confirmar"
+        />
       </Footer>
     </Container>
   );
