@@ -49,14 +49,15 @@ interface Params {
 }
 
 interface RentalInterval {
-  startFormatted: string;
-  endFormatted: string;
+  startDate: string;
+  endDate: string;
 }
 
 export function SchedulingDetails() {
   const [rentalPeriod, setRentalPeriod] = useState<RentalInterval>(
     {} as RentalInterval
   );
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -69,11 +70,22 @@ export function SchedulingDetails() {
   }
 
   async function handleConfirm() {
+    setLoading(true);
     const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
     const unavailable_dates = [
       ...schedulesByCar.data.unavailable_dates,
       ...dates,
     ];
+
+    await api.post("/schedules_byuser", {
+      user_id: 1,
+      car,
+      startDate: format(getPlatformDate(new Date(dates[0])), "dd/MM/yyyy"),
+      endDate: format(
+        getPlatformDate(new Date(dates[dates.length - 1])),
+        "dd/MM/yyyy"
+      ),
+    });
 
     api
       .put(`/schedules_bycars/${car.id}`, {
@@ -81,14 +93,16 @@ export function SchedulingDetails() {
         unavailable_dates,
       })
       .then(() => navigation.navigate("SchedulingComplete"))
-      .catch(()=> Alert.alert('Não foi possível finalizar a locação')
-      );
+      .catch(() => {
+        Alert.alert("Não foi possível finalizar a locação");
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
     setRentalPeriod({
-      startFormatted: format(getPlatformDate(new Date(dates[0])), "dd/MM/yyyy"),
-      endFormatted: format(
+      startDate: format(getPlatformDate(new Date(dates[0])), "dd/MM/yyyy"),
+      endDate: format(
         getPlatformDate(new Date(dates[dates.length - 1])),
         "dd/MM/yyyy"
       ),
@@ -133,7 +147,7 @@ export function SchedulingDetails() {
           </CalendarIcon>
           <DateInfo>
             <DateTitle>De</DateTitle>
-            <DateValue>{rentalPeriod.startFormatted}</DateValue>
+            <DateValue>{rentalPeriod.startDate}</DateValue>
           </DateInfo>
 
           <Feather
@@ -144,7 +158,7 @@ export function SchedulingDetails() {
 
           <DateInfo>
             <DateTitle>Até</DateTitle>
-            <DateValue>{rentalPeriod.endFormatted}</DateValue>
+            <DateValue>{rentalPeriod.endDate}</DateValue>
           </DateInfo>
         </RentalPeriod>
         <RentalPrice>
@@ -162,6 +176,8 @@ export function SchedulingDetails() {
           onPress={handleConfirm}
           title="Alugar agora"
           color={theme.colors.success}
+          loading={loading}
+          enabled={!loading}
         />
       </Footer>
     </Container>
