@@ -15,7 +15,6 @@ import { Routes } from "./src/routes";
 import { ThemeProvider } from "styled-components/native";
 import AppLoading from "expo-app-loading";
 
-import { SchedulingComplete } from "./src/screens/SchedulingComplete";
 import theme from "./src/styles/theme";
 export default function App() {
   const [fontsLoaded] = useFonts({
