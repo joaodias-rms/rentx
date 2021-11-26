@@ -6,13 +6,13 @@ import { Button } from "../../components/Button";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import Animated, {useSharedValue} from "react-native-reanimated";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 
 import {
   Container,
   Header,
   CarImages,
-  Content,
   Details,
   Description,
   Brand,
@@ -25,6 +25,7 @@ import {
   Footer,
 } from "./styles";
 import { carDTO } from "../../dtos/carDTO";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 interface Params {
   car: carDTO;
@@ -38,7 +39,7 @@ export function CarDetails() {
   const { car } = route.params as Params;
 
   function handleChooseRentalPeriod() {
-    navigation.navigate("Scheduling", {car});
+    navigation.navigate("Scheduling", { car });
   }
 
   function handleGoBack() {
@@ -51,11 +52,16 @@ export function CarDetails() {
         <BackButton onPress={handleGoBack} />
       </Header>
       <CarImages>
-        <ImageSlider
-          imagesUrl={car.photos}
-        />
+        <ImageSlider imagesUrl={car.photos} />
       </CarImages>
-      <Content>
+      <Animated.ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingVertical: getStatusBarHeight() + 24,
+          alignItems: "center",
+        }}
+        showsVerticalScrollIndicator={false}
+      >
         <Details>
           <Description>
             <Brand>{car.brand}</Brand>
@@ -68,11 +74,15 @@ export function CarDetails() {
         </Details>
         <Acessories>
           {car.accessories.map((acessory) => (
-            <Acessory key={acessory.type} name={acessory.name} icon={getAccessoryIcon(acessory.type)} />
+            <Acessory
+              key={acessory.type}
+              name={acessory.name}
+              icon={getAccessoryIcon(acessory.type)}
+            />
           ))}
         </Acessories>
         <About>{car.about}</About>
-      </Content>
+      </Animated.ScrollView>
       <Footer>
         <Button
           onPress={handleChooseRentalPeriod}
