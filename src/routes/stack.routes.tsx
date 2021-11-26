@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { Home } from "../screens/Home";
 import { MyCars } from "../screens/MyCars";
+import { Splash } from "../screens/Splash";
 import { CarDetails } from "../screens/CarDetails";
 import { Scheduling } from "../screens/Scheduling";
 import { SchedulingDetails } from "../screens/SchedulingDetails";
@@ -13,7 +14,8 @@ const { Navigator, Screen } = createStackNavigator();
 
 export function StackRoutes() {
   return (
-    <Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+    <Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+      <Screen name="Splash" component={Splash} />
       <Screen name="Home" component={Home} />
       <Screen name="CarDetails" component={CarDetails} />
       <Screen name="Scheduling" component={Scheduling} />
