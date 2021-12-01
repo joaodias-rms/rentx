@@ -13,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 const ButtonAnimated = Animated.createAnimatedComponent(RectButton);
 
-import { Load } from "../../components/Load";
+import { LoadAnimation } from "../../components/LoadAnimation";
 import { Car } from "../../components/Car";
 import Logo from "../../assets/logo.svg";
 import api from "../../services/api";
@@ -97,7 +97,7 @@ export function Home() {
         </HeaderContent>
       </Header>
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <CarList
           data={cars}

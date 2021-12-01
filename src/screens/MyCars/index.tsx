@@ -23,7 +23,7 @@ import {
 
 import { BackButton } from "../../components/BackButton";
 import { Car } from "../../components/Car";
-import { Load } from "../../components/Load";
+import { LoadAnimation } from "../../components/LoadAnimation";
 
 import { carDTO } from "../../dtos/carDTO";
 import theme from "../../styles/theme";
@@ -80,7 +80,7 @@ export function MyCars() {
       </Header>
       <Content>
         {loading ? (
-          <Load />
+          <LoadAnimation />
         ) : (
           <>
             <Appointments>
