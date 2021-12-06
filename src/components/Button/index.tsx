@@ -7,7 +7,6 @@ import theme from "../../styles/theme";
 interface Props extends RectButtonProps {
   title: string;
   color?: string;
-  enabled?: boolean;
   loading?: boolean;
   text_color?: string;
 }
@@ -17,6 +16,7 @@ export function Button({
   enabled = true,
   title,
   color,
+  onPress,
   text_color,
   ...rest
 }: Props) {
@@ -25,6 +25,7 @@ export function Button({
       style={{ opacity: enabled == false || loading === true ? 0.5 : 1 }}
       enabled={enabled}
       color={color}
+      onPress={onPress}
       {...rest}
     >
       {loading ? (
