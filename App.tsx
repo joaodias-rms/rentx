@@ -11,6 +11,7 @@ import {
 } from "@expo-google-fonts/archivo";
 
 import { Routes } from "./src/routes";
+import { AppProvider } from "./src/hooks";
 
 import { ThemeProvider } from "styled-components/native";
 import AppLoading from "expo-app-loading";
@@ -30,7 +31,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Routes />
+      <AppProvider>
+        <Routes />
+      </AppProvider>
     </ThemeProvider>
   );
 }
