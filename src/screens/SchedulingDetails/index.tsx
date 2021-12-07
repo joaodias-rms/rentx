@@ -92,7 +92,13 @@ export function SchedulingDetails() {
         id: car.id,
         unavailable_dates,
       })
-      .then(() => navigation.navigate("SchedulingComplete"))
+      .then(() =>
+        navigation.navigate("Confirmation", {
+          title: "Carro alugado",
+          message: `Agora basta ir\naté uma concessionária RentX\npara retirar seu veículo.`,
+          nextScreenRoute: "Home",
+        })
+      )
       .catch(() => {
         Alert.alert("Não foi possível finalizar a locação");
         setLoading(false);
