@@ -7,6 +7,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../hooks/auth";
 
 import * as Yup from "yup";
 
@@ -22,6 +23,7 @@ export function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   async function handleSignIn() {
     try {
@@ -33,6 +35,8 @@ export function SignIn() {
       });
 
       await schema.validate({ email, password });
+
+      signIn({ email, password });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         return Alert.alert("Ocorreu um erro", error.message);
@@ -42,8 +46,8 @@ export function SignIn() {
     }
   }
 
-  function handleNewAccount(){
-    navigation.navigate('SignUpFirstStep')
+  function handleNewAccount() {
+    navigation.navigate("SignUpFirstStep");
   }
 
   return (
