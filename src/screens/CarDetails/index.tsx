@@ -113,14 +113,14 @@ export function CarDetails() {
             <Name>{car.name}</Name>
           </Description>
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>R${car.rent.price}</Price>
+            <Period>{car.period}</Period>
+            <Price>R${car.price}</Price>
           </Rent>
         </Details>
         <Acessories>
           {car.accessories.map((acessory) => (
             <Acessory
-              key={acessory.type}
+              key={acessory.id}
               name={acessory.name}
               icon={getAccessoryIcon(acessory.type)}
             />

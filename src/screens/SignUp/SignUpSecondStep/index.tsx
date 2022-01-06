@@ -7,10 +7,10 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { BackButton } from "../../../components/BackButton";
-import { Bullet } from "../../../components/Bullet";
-import { PasswordInput } from "../../../components/PasswordInput";
 import { Button } from "../../../components/Button";
+import { Bullet } from "../../../components/Bullet";
+import { BackButton } from "../../../components/BackButton";
+import { PasswordInput } from "../../../components/PasswordInput";
 
 import {
   Container,
