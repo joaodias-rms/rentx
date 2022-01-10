@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StatusBar,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  BackHandler,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../hooks/auth";
@@ -50,6 +51,12 @@ export function SignIn() {
     navigation.navigate("SignUpFirstStep");
   }
 
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }, []);
+
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -73,12 +80,14 @@ export function SignIn() {
               autoCapitalize="none"
               keyboardType="email-address"
               placeholder="Email"
+              placeholderTextColor={theme.colors.text}
               onChangeText={setEmail}
               value={email}
             />
             <PasswordInput
               iconName="lock"
               placeholder="Senha"
+              placeholderTextColor={theme.colors.text}
               autoCapitalize="none"
               onChangeText={setPassword}
               value={password}
