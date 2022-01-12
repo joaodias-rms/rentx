@@ -3,11 +3,12 @@ import { database } from "../database";
 import api from "../services/api";
 
 import { User as ModelUser } from "../database/models/User";
+import { useEffect } from "react";
 
 interface User {
   id: string;
   user_id: string;
-  eamil: string;
+  email: string;
   name: string;
   driver_license: string;
   avatar: string;
@@ -60,6 +61,23 @@ function AuthProvider({ children }: AuthProviderProps) {
       throw new Error(error);
     }
   }
+
+  useEffect(() => {
+    async function loadUserData() {
+      const userCollection = database.get<ModelUser>("users");
+      const response = await userCollection.query().fetch();
+
+      if (response.length > 0) {
+        const userData = response[0]._raw as unknown as User;
+        api.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${userData.token}`;
+        setData(userData);
+      }
+    }
+    loadUserData();
+  }, []);
+
   return (
     <AuthContext.Provider value={{ user: data, signIn }}>
       {children}
