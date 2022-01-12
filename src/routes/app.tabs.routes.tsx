@@ -3,7 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AppStackRoutes } from "./app.stack.routes";
 
-import { Home } from "../screens/Home";
+import { Profile } from "../screens/Profile";
 import { MyCars } from "../screens/MyCars";
 
 import HomeSVG from "../assets/home.svg";
@@ -30,7 +30,7 @@ export function AppTabRoutes() {
       }}
     >
       <Screen
-        name="Home"
+        name="FirstStack"
         component={AppStackRoutes}
         options={{
           tabBarIcon: ({ color }) => (
@@ -49,7 +49,7 @@ export function AppTabRoutes() {
         />
       <Screen
         name="Profile"
-        component={Home}
+        component={Profile}
         options={{
           tabBarIcon: ({ color }) => (
             <PeopleSVG width={24} height={24} fill={color} />
