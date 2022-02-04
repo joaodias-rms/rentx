@@ -29,10 +29,10 @@ export function SignIn() {
   async function handleSignIn() {
     try {
       const schema = Yup.object().shape({
-        email: Yup.string()
-          .required("O email é Obrigatório")
-          .email("Digite um Email válido"),
         password: Yup.string().required("A senha obrigatória"),
+        email: Yup.string()
+        .email("Digite um Email válido")
+        .required("O email é Obrigatório"),
       });
 
       await schema.validate({ email, password });
