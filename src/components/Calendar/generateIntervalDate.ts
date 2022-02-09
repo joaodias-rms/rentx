@@ -1,17 +1,17 @@
 import { eachDayOfInterval, format } from "date-fns";
 
-import {  DayProps } from ".";
+import { MarkedDateProps, DayProps } from ".";
+import { getPlatformDate } from "../../utils/getPlatformDate";
 import theme from "../../styles/theme";
 
-
 export function generateIntervalDate(start: DayProps, end: DayProps) {
-  let interval= {};
+  let interval: MarkedDateProps = {};
 
   eachDayOfInterval({
     start: new Date(start.timestamp),
     end: new Date(end.timestamp),
   }).forEach((item) => {
-    const date = format(item, "yyyy/MM/dd");
+    const date = format(getPlatformDate(item), "yyyy-MM-dd");
 
     interval = {
       ...interval,
@@ -27,6 +27,5 @@ export function generateIntervalDate(start: DayProps, end: DayProps) {
       },
     };
   });
-
   return interval
 }
