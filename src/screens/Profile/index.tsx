@@ -35,8 +35,10 @@ import {
 
 import { Feather } from "@expo/vector-icons";
 import theme from "../../styles/theme";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 export function Profile() {
+  const netinfo = useNetInfo();
   const { user, signOut, updateUser } = useAuth();
 
   const [option, setOption] = useState<"dataEdit" | "passwordEdit">("dataEdit");
@@ -51,7 +53,11 @@ export function Profile() {
   };
 
   const handleOptionChange = (selectedOption: "dataEdit" | "passwordEdit") => {
-    setOption(selectedOption);
+    if (netinfo.isConnected === false && selectedOption === "passwordEdit") {
+      Alert.alert("Você está offline", "Para mudar a senha conecte-se à internet");
+    } else {
+      setOption(selectedOption);
+    }
   };
 
   const handleSelectAvatar = async () => {
@@ -107,9 +113,9 @@ export function Profile() {
           onPress: () => {},
           style: "cancel",
         },
-        { 
+        {
           text: "Sair",
-          onPress: () => signOut()
+          onPress: () => signOut(),
         },
       ]
     );
